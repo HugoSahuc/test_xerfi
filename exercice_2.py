@@ -67,8 +67,17 @@ def print_doc(collection, doc_id):
     )
     print(f"p:{doc['metadatas'][0]['page']}, {doc['metadatas'][0]['date']} {doc['documents'][0]}")
 
+"""
+To run and set the collection in the chromaDb local Persistent client
+collection = chroma_client.get_or_create_collection(name="test_xerfi")
+collection = chroma_client.get_or_create_collection(name="test_xerfi")
+create_doc_from_file(collection)
 
-#print_doc(collection, doc_id)
+#print the first page
+print_doc(collection, "doc_p0")
+"""
+
+#test in a separate collection the create_doc_from_file
 id_test = "doc_p0"
 test_collection = chroma_client.create_collection(name="unit_test")
 create_doc_from_file(test_collection)
