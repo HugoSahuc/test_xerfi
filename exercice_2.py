@@ -6,7 +6,7 @@ import subprocess
 import os
 
 chroma_client = chromadb.PersistentClient(path=".test_db")
-collection = chroma_client.create_collection(name="test_xerfi")
+collection = chroma_client.get_or_create_collection(name="test_xerfi")
 
 """
 We will need to change the docx to pdf to get the pages,
@@ -69,11 +69,22 @@ def print_doc(collection, doc_id):
 
 
 #print_doc(collection, doc_id)
+id_test = "doc_p0"
+test_collection = chroma_client.create_collection(name="unit_test")
+create_doc_from_file(test_collection)
 
-#update_doc("TEST", doc_id, collection)
+assert test_collection.count() == 3
 
-#code asset with a new db that the change is at the end.
+doc0 = test_collection.get(ids=[id_test])
+assert doc0["metadatas"][0]['page'] == 0
+assert doc0["metadatas"][0]['source'] == 'test_technique_xerfi.pdf'
 
+chroma_client.delete_collection(name="unit_test")
+
+#test create_pdf
+assert create_pdf_from_docx("./test_technique_hugo.pdf", "./test_technique_hugo.docx")
+
+# test update_doc
 phrase = " Il était une fois une histoire passionnante blablabla …"
 to_add = "Bien le bonjour !"
 result_phrase = "Bien le bonjour ! Il était une fois une histoire passionnante blablabla …"
