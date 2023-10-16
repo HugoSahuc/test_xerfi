@@ -2,7 +2,8 @@ import chromadb
 from chromadb.config import Settings
 from langchain.document_loaders import PyPDFLoader
 from datetime import date
-#import aspose.words as aw
+import subprocess
+import os
 
 chroma_client = chromadb.PersistentClient(path=".test_db")
 collection = chroma_client.create_collection(name="test_xerfi")
@@ -15,7 +16,26 @@ others alternatives like OpenOffice to show the pages of the doc.
 
 https://stackoverflow.com/questions/62931764/convert-docx-to-pdf-in-python-in-linux
 """
+
+def create_pdf_from_docx(path_pdf, path_docx):
+    if not (os.path.isfile(path_docx)):
+        print("Error: There is no .docx file")
+        return False
+
+    try:
+        output = subprocess.check_output(['libreoffice', '--convert-to', 'pdf' ,path_docx])
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        print("Error: you need to install LibreOffice")
+        return False
+
+    if not (os.path.isfile(path_pdf)):
+        print("Error: the pdf file was not created")
+        return False
+    return True
+
 def create_doc_from_file(collection):
+    if not (create_pdf_from_docx("./test_technique_hugo.pdf", "./test_technique_hugo.docx")):
+        return
     loader = PyPDFLoader("./test_technique_hugo.pdf")
     documents = loader.load_and_split()
 
