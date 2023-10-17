@@ -8,8 +8,8 @@ import os
 """
 We will need to change the docx to pdf to get the pages,
 because .docx does not have the pages it's the software that print the pages, contrary to pdf.
-Problem is that I uses linux and words is not avariable, we can uses
-others alternatives like OpenOffice to show the pages of the doc.
+Problem is that words is not avariable in linux
+we can uses others alternatives like OpenOffice to convert doc with a process
 
 https://stackoverflow.com/questions/62931764/convert-docx-to-pdf-in-python-in-linux
 """
@@ -68,6 +68,7 @@ def main():
     chroma_client = chromadb.PersistentClient(path="test_db")
     collection = chroma_client.create_collection(name="test_xerfi")
     create_doc_from_file(collection)
+    #print_doc(collection, "doc_p0")
     #update_doc("TEST", "doc_p0", collection)
     #print_doc(collection, "doc_p0")
 
