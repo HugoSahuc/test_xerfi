@@ -1,5 +1,6 @@
 import chromadb
-from exercice_2 import create_doc_from_file, create_pdf_from_docx, update_doc
+from datetime import date
+from exercice_2 import create_doc_from_file, create_pdf_from_docx, update_doc, print_doc
 
 chroma_client = chromadb.EphemeralClient()
 
@@ -12,7 +13,12 @@ assert test_collection.count() == 3
 
 doc0 = test_collection.get(ids=[id_test])
 assert doc0["metadatas"][0]['page'] == 0
+assert doc0["metadatas"][0]['date'] == date.today().strftime("%d/%m/%Y")
 assert doc0["metadatas"][0]['source'] == 'test_technique_xerfi.pdf'
+
+doc1 = test_collection.get(ids=["doc_p1"])
+assert doc1["metadatas"][0]['page'] == 3
+assert doc1["metadatas"][0]['date'] == date.today().strftime("%d/%m/%Y")
 
 chroma_client.delete_collection(name="unit_test")
 
