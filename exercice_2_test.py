@@ -20,6 +20,9 @@ doc1 = test_collection.get(ids=["doc_p1"])
 assert doc1["metadatas"][0]['page'] == 3
 assert doc1["metadatas"][0]['date'] == date.today().strftime("%d/%m/%Y")
 
+doc2 = test_collection.get(ids=["doc_p2"])
+assert doc2["metadatas"][0]['page'] == 6
+
 chroma_client.delete_collection(name="unit_test")
 
 #test create_pdf
