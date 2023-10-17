@@ -64,8 +64,12 @@ def print_doc(collection, doc_id):
     )
     print(f"p:{doc['metadatas'][0]['page']}, {doc['metadatas'][0]['date']} {doc['documents'][0]}")
 
-chroma_client = chromadb.PersistentClient(path="test_db")
-collection = chroma_client.create_collection(name="test_xerfi")
-create_doc_from_file(collection)
-#update_doc("TEST", "doc_p0", collection)
-#print_doc(collection, "doc_p0")
+def main():
+    chroma_client = chromadb.PersistentClient(path="test_db")
+    collection = chroma_client.create_collection(name="test_xerfi")
+    create_doc_from_file(collection)
+    #update_doc("TEST", "doc_p0", collection)
+    #print_doc(collection, "doc_p0")
+
+if __name__ == "__main__":
+    main()
