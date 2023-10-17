@@ -2,6 +2,10 @@
 SPLIT = ' '
 def my_fuction(p_size, dict_possibilities, sentence):
     split_sentence = sentence.split(SPLIT)
+
+    if len(split_sentence) != p_size and p_size > 0:
+        return False
+
     for possibilities in range(p_size):
         if not int(possibilities+1) in dict_possibilities or \
             not split_sentence[possibilities] in dict_possibilities[int(possibilities+1)]:
@@ -43,6 +47,7 @@ def tests():
     #test empty
     test_my_fuction(p_size, dict_possibilities, "", False)
     test_my_fuction(0, {}, "", True)
+    test_my_fuction(2, {}, "", False)
 
 if __name__ == "__main__":
     tests()
